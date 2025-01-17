@@ -1,16 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,15 +12,35 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={inter.className}>
+        <header className="flex justify-between items-center bg-slate-800 py-10">
+          <nav className="container">
+            <ul className="flex gap-6 text-sm font-medium uppercase tracking-wider text-gray-300">
+              <li>
+                <Link href="/">Home</Link>
+              </li>
+              <li>
+                <Link href="/Setup-Cordinates">Cordinates</Link>
+              </li>
+              <li>
+                <Link href="/Setup-Components">Components</Link>
+              </li>
+              <li>
+                <Link href="/Setup-WsStations">Ws-Stations</Link>
+              </li>
+              <li>
+                <Link href="/Geography">Geography</Link>
+              </li>
+            </ul>
+          </nav>
+        </header>
+
+        <main>{children}</main>
       </body>
     </html>
   );
