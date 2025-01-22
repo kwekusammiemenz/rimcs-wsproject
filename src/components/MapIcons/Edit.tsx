@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { GETAll, getAPIUPDATEPATH } from "@/src/lib/apiActions";
+import { GETAll, getAPIUPDATEPATH } from "@/src/Actions/ApiCalls/apiActions";
 
 const DataBaseTable = "MapIcons";
 const DropdownDataBaseTable = "Operators";
@@ -84,10 +84,10 @@ export default function EditMapIcons({ id, mapIconsName, operator }: any) {
             <option></option>
             {listOperator
               ? listOperator.map((x: any, index) => (
-                  <option key={index} value={x._id}>
-                    {x.operatorsName}
-                  </option>
-                ))
+                <option key={index} value={x._id}>
+                  {x.operatorsName}
+                </option>
+              ))
               : null}
           </select>
         </div>

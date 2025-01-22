@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { GETAll, getAPIUPDATEPATH } from "@/src/lib/apiActions";
+import { GETAll, getAPIUPDATEPATH } from "@/src/Actions/ApiCalls/apiActions";
 
 const DataBaseTable = "WeatherStations";
 const LocationTypesDropdownDataBaseTable = "LocationTypes";
@@ -152,10 +152,10 @@ export default function EditWeatherStations({
               <option></option>
               {locationTypesList
                 ? locationTypesList.map((x: any) => (
-                    <option key={x._id} value={x._id}>
-                      {x.locationTypesName}
-                    </option>
-                  ))
+                  <option key={x._id} value={x._id}>
+                    {x.locationTypesName}
+                  </option>
+                ))
                 : null}
             </select>
           </div>
@@ -185,10 +185,10 @@ export default function EditWeatherStations({
               <option></option>
               {countriesList
                 ? countriesList.map((x: any) => (
-                    <option key={x._id} value={x._id}>
-                      {x.countriesName}
-                    </option>
-                  ))
+                  <option key={x._id} value={x._id}>
+                    {x.countriesName}
+                  </option>
+                ))
                 : null}
             </select>
           </div>
@@ -205,10 +205,10 @@ export default function EditWeatherStations({
               <option></option>
               {regionsList
                 ? regionsList.map((x: any) => (
-                    <option key={x._id} value={x._id}>
-                      {x.regionsName}
-                    </option>
-                  ))
+                  <option key={x._id} value={x._id}>
+                    {x.regionsName}
+                  </option>
+                ))
                 : null}
             </select>
           </div>
@@ -225,10 +225,10 @@ export default function EditWeatherStations({
               <option></option>
               {districtsList
                 ? districtsList.map((x: any) => (
-                    <option key={x._id} value={x._id}>
-                      {x.districtsName}
-                    </option>
-                  ))
+                  <option key={x._id} value={x._id}>
+                    {x.districtsName}
+                  </option>
+                ))
                 : null}
             </select>
           </div>
@@ -258,10 +258,10 @@ export default function EditWeatherStations({
               <option></option>
               {operatorsList
                 ? operatorsList.map((x: any) => (
-                    <option key={x._id} value={x._id}>
-                      {x.operatorsName}
-                    </option>
-                  ))
+                  <option key={x._id} value={x._id}>
+                    {x.operatorsName}
+                  </option>
+                ))
                 : null}
             </select>
           </div>

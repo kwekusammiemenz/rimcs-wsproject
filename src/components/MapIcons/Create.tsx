@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { GETAll, getAPIDATA } from "@/src/lib/apiActions";
+import { GETAll, getAPIDATA } from "@/src/Actions/ApiCalls/apiActions";
 import { convertToBase64 } from "@/src/lib/functions";
 
 const DataBaseTable = "MapIcons";

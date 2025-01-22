@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { GETAll, getAPIDATA } from "@/src/lib/apiActions";
+import { GETAll, getAPIDATA } from "@/src/Actions/ApiCalls/apiActions";
 
 const DataBaseTable = "Regions";
 const DropdownDataBaseTable = "Countries";
@@ -110,12 +110,12 @@ export default function CreateRegions() {
               <option></option>
               {countriesList
                 ? countriesList.map((x: any) => {
-                    return (
-                      <option key={x._id} value={x._id}>
-                        {x.countriesName}
-                      </option>
-                    );
-                  })
+                  return (
+                    <option key={x._id} value={x._id}>
+                      {x.countriesName}
+                    </option>
+                  );
+                })
                 : null}
             </select>
           </div>

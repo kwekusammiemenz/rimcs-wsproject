@@ -38,6 +38,28 @@ const ComponentsLayout = ({ children }: { children: React.ReactNode }) => {
               >
                 <Link href="/Districts">Districts</Link>
               </motion.li>
+
+              <motion.li
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 }}
+              >
+                <Link href="/ImportCountries">Import Countries</Link>
+              </motion.li>
+              <motion.li
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 }}
+              >
+                <Link href="/ImportRegions">Import Regions</Link>
+              </motion.li>
+              <motion.li
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 }}
+              >
+                <Link href="/ImportDistricts">Import Districts</Link>
+              </motion.li>
             </ul>
           </nav>
         </div>

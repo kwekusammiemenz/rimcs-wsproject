@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
-import { DELETEData } from "../lib/apiActions";
+import { DELETEData } from "../Actions/ApiCalls/apiActions";
 
 function EditButton({ tableName, id }: any) {
   const router = useRouter();

@@ -1,5 +1,5 @@
 import EditSponsors from "@/src/components/Sponsors/Edit";
-import { GETDATABYiDs } from "@/src/lib/apiActions";
+import { GETDATABYiDs } from "@/src/Actions/ApiCalls/apiActions";
 
 const DataBaseTable = "Sponsors";
 

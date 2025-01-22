@@ -1,5 +1,5 @@
 import EditRegions from "@/src/components/Regions/Edit";
-import { GETDATABYiDs } from "@/src/lib/apiActions";
+import { GETDATABYiDs } from "@/src/Actions/ApiCalls/apiActions";
 
 const DataBaseTable = "Regions";
 
@@ -8,7 +8,7 @@ export default async function Edit({
 }: {
   params: Promise<{ id: string }>;
 }) {
- const id = (await params).id;
+  const id = (await params).id;
   const tableiD: string = id;
   const { Regions } = await GETDATABYiDs(tableiD, DataBaseTable);
   const { regionsName, latitude, longitude, country } = Regions;

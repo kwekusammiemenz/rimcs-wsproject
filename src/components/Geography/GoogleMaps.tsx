@@ -2,7 +2,7 @@
 we need to make this component client rendered as well*/
 "use client";
 
-import { GETAll } from "@/src/lib/apiActions";
+import { GETAll } from "@/src/Actions/ApiCalls/apiActions";
 //Map component Component from library
 import { GoogleMap, InfoWindow, InfoWindowF, Marker, MarkerF } from "@react-google-maps/api";
 import React, { useEffect, useState } from "react";
@@ -99,40 +99,40 @@ const MapComponent = () => {
         mapContainerStyle={defaultMapContainerStyle}
         center={defaultMapCenter}
         zoom={8}
-        //options={defaultMapOptions}
+      //options={defaultMapOptions}
       >
         {weatherStations
           ? weatherStations.map((x: any, index) => {
-              return (
-                <MarkerF
-                  key={index}
-                  title={x.weatherStationsName}
-                  position={{
-                    lat: Number(x.latitude),
-                    lng: Number(x.longitude),
-                  }}
-                  onClick={(e)=>{
-                    // x === selectedPlace ? setSelectedPlace(null):setSelectedPlace(x);
-                    console.log(e)
-                  }}
+            return (
+              <MarkerF
+                key={index}
+                title={x.weatherStationsName}
+                position={{
+                  lat: Number(x.latitude),
+                  lng: Number(x.longitude),
+                }}
+                onClick={(e) => {
+                  // x === selectedPlace ? setSelectedPlace(null):setSelectedPlace(x);
+                  console.log(e)
+                }}
 
-                  // key={index}
-                  // title={x.weatherStationsName}
-                  // position={{
-                  //   lat: Number(x.latitude),
-                  //   lng: Number(x.longitude),
-                  // }}
-                  // onClick={() => handleClick(x)}
+              // key={index}
+              // title={x.weatherStationsName}
+              // position={{
+              //   lat: Number(x.latitude),
+              //   lng: Number(x.longitude),
+              // }}
+              // onClick={() => handleClick(x)}
 
-                  // onClick={(props: any, marker: React.SetStateAction<null>) => {
-                  //   setSelectedElement(x);
-                  //   setActiveMarker(marker);
-                  // }}
-                />
-              );
-            })
+              // onClick={(props: any, marker: React.SetStateAction<null>) => {
+              //   setSelectedElement(x);
+              //   setActiveMarker(marker);
+              // }}
+              />
+            );
+          })
           : null}
-       {/*   {selectedPlace &&(
+        {/*   {selectedPlace &&(
           <InfoWindowF
           position={{
                     lat: selectedPlace.latitude,
@@ -153,11 +153,11 @@ const MapComponent = () => {
                   </InfoWindowF>
         )}
          */}
-        
-        
-        
-        
-        
+
+
+
+
+
         {/* {selectedElement
           ? selectedElement.map((x: any) => {
               return (

@@ -1,10 +1,10 @@
 import EditDistricts from "@/src/components/Districts/Edit";
-import { GETDATABYiDs } from "@/src/lib/apiActions";
+import { GETDATABYiDs } from "@/src/Actions/ApiCalls/apiActions";
 
 const DataBaseTable = "Districts";
 
 export default async function Edit({ params }: { params: Promise<{ id: string }> }) {
- const id = (await params).id;
+  const id = (await params).id;
   const tableiD: string = id;
   const { Districts } = await GETDATABYiDs(tableiD, DataBaseTable);
   const { districtsName, latitude, longitude, region } = Districts;

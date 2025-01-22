@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, usePathname } from "next/navigation"; 
-import { getAPIUPDATEPATH } from "@/src/lib/apiActions";
+import { useRouter, usePathname } from "next/navigation";
+import { getAPIUPDATEPATH } from "@/src/Actions/ApiCalls/apiActions";
 
 const DataBaseTable = "Countries";
 
@@ -30,7 +30,8 @@ export default function EditCountries({
       const res = await fetch(apiURI, {
         method: "PUT",
         headers: {
-          "Content-type": "application/json",        },
+          "Content-type": "application/json",
+        },
         body: JSON.stringify({
           newCountriesCode,
           newCountriesName,

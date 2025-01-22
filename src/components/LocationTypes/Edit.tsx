@@ -1,8 +1,8 @@
 "use client";
 
-import {  useState } from "react";
+import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import {  getAPIUPDATEPATH } from "@/src/lib/apiActions";
+import { getAPIUPDATEPATH } from "@/src/Actions/ApiCalls/apiActions";
 
 const DataBaseTable = "LocationTypes";
 

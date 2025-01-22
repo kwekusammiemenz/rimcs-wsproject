@@ -1,5 +1,5 @@
 import { DeleteButton, EditButton } from "@/src/components/ActionButtons";
-import { GETAll } from "@/src/lib/apiActions";
+import { GETAll } from "@/src/Actions/ApiCalls/apiActions";
 
 const DataBaseTable: string = "WeatherStations";
 
@@ -21,90 +21,90 @@ const WeatherStationsIndexPage = async () => {
           <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             {data
               ? data.map((x: any) => (
-                  <div
-                    key={x._id}
-                    className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700"
-                  >
-                    <div className="flex items-center justify-between mb-4">
-                      <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
-                        {x.weatherStationsName}
-                      </h5>
-                    </div>
-                    <div className="flow-root">
-                      <ul
-                        role="list"
-                        className="divide-y divide-gray-200 dark:divide-gray-700"
-                      >
-                        <li className="py-3 sm:py-4">
-                          <div className="flex items-center">
-                            <div className="flex-1 min-w-0 ms-4">
-                              <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                                location
-                              </p>
-                              <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                {x.location}
-                              </p>
-                            </div>
-                          </div>
-                        </li>
-                        <li className="py-3 sm:py-4">
-                          <div className="flex items-center ">
-                            <div className="flex-1 min-w-0 ms-4">
-                              <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                                accuracyLevel
-                              </p>
-                              <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                {x.accuracyLevel}
-                              </p>
-                            </div>
-                          </div>
-                        </li>
-                        <li className="py-3 sm:py-4">
-                          <div className="flex items-center">
-                            <div className="flex-1 min-w-0 ms-4">
-                              <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                                elevation
-                              </p>
-                              <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                {x.elevation}
-                              </p>
-                            </div>
-                          </div>
-                        </li>
-                        <li className="py-3 sm:py-4">
-                          <div className="flex items-center ">
-                            <div className="flex-1 min-w-0 ms-4">
-                              <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                                Cordinate
-                              </p>
-                              <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                ({x.latitude}
-                                {", "}
-                                {x.longitude})
-                              </p>
-                            </div>
-                          </div>
-                        </li>
-                        <li className="pt-3 pb-0 sm:pt-4">
-                          <div className="flex items-center ">
-                            <div className="flex-1 min-w-0 ms-4">
-                              <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                                stationStatus
-                              </p>
-                              <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                {x.stationStatus}
-                              </p>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="flex mt-4 md:mt-6">
-                      <EditButton tableName={DataBaseTable} id={x._id} />
-                      <DeleteButton tableName={DataBaseTable} id={x._id} />
-                    </div>
+                <div
+                  key={x._id}
+                  className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                      {x.weatherStationsName}
+                    </h5>
                   </div>
-                ))
+                  <div className="flow-root">
+                    <ul
+                      role="list"
+                      className="divide-y divide-gray-200 dark:divide-gray-700"
+                    >
+                      <li className="py-3 sm:py-4">
+                        <div className="flex items-center">
+                          <div className="flex-1 min-w-0 ms-4">
+                            <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                              location
+                            </p>
+                            <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                              {x.location}
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="py-3 sm:py-4">
+                        <div className="flex items-center ">
+                          <div className="flex-1 min-w-0 ms-4">
+                            <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                              accuracyLevel
+                            </p>
+                            <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                              {x.accuracyLevel}
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="py-3 sm:py-4">
+                        <div className="flex items-center">
+                          <div className="flex-1 min-w-0 ms-4">
+                            <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                              elevation
+                            </p>
+                            <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                              {x.elevation}
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="py-3 sm:py-4">
+                        <div className="flex items-center ">
+                          <div className="flex-1 min-w-0 ms-4">
+                            <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                              Cordinate
+                            </p>
+                            <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                              ({x.latitude}
+                              {", "}
+                              {x.longitude})
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="pt-3 pb-0 sm:pt-4">
+                        <div className="flex items-center ">
+                          <div className="flex-1 min-w-0 ms-4">
+                            <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                              stationStatus
+                            </p>
+                            <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                              {x.stationStatus}
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="flex mt-4 md:mt-6">
+                    <EditButton tableName={DataBaseTable} id={x._id} />
+                    <DeleteButton tableName={DataBaseTable} id={x._id} />
+                  </div>
+                </div>
+              ))
               : null}
           </div>
         </div>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { getAPIDATA } from "@/src/lib/apiActions";
+import { getAPIDATA } from "@/src/Actions/ApiCalls/apiActions";
 
 const DataBaseTable = "Countries";
 

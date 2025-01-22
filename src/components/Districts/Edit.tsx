@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { GETAll, getAPIUPDATEPATH } from "@/src/lib/apiActions";
+import { GETAll, getAPIUPDATEPATH } from "@/src/Actions/ApiCalls/apiActions";
 
 const DataBaseTable = "Districts";
 const DropdownDataBaseTable = "Regions";
@@ -122,12 +122,12 @@ export default function EditDistricts({
               <option></option>
               {regionsList
                 ? regionsList.map((x: any) => {
-                    return (
-                      <option key={x._id} value={x._id}>
-                        {x.regionsName}
-                      </option>
-                    );
-                  })
+                  return (
+                    <option key={x._id} value={x._id}>
+                      {x.regionsName}
+                    </option>
+                  );
+                })
                 : null}
             </select>
           </div>

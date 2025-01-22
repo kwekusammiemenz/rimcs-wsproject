@@ -1,5 +1,5 @@
 import EditLocationTypes from "@/src/components/LocationTypes/Edit";
-import { GETDATABYiDs } from "@/src/lib/apiActions";
+import { GETDATABYiDs } from "@/src/Actions/ApiCalls/apiActions";
 
 const DataBaseTable = "LocationTypes";
 
@@ -8,7 +8,7 @@ export default async function Edit({
 }: {
   params: Promise<{ id: string }>;
 }) {
- const id = (await params).id;
+  const id = (await params).id;
   const tableiD: string = id;
   const { LocationTypes } = await GETDATABYiDs(tableiD, DataBaseTable);
   const { locationTypesName } = LocationTypes;

@@ -1,11 +1,13 @@
 import { DeleteButton, EditButton } from "@/src/components/ActionButtons";
-import { GETAll } from "@/src/lib/apiActions";
+import { GETAll } from "@/src/Actions/ApiCalls/apiActions";
 import Image from "next/image";
 
 const DataBaseTable: string = "MapIcons";
+const subDataBaseTable: string = "Operators";
 
 const Index = async () => {
   const data = await GETAll(DataBaseTable);
+  const subData = await GETAll(subDataBaseTable);
 
   return (
     <>
@@ -21,31 +23,49 @@ const Index = async () => {
           </div>
           <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             {data
-              ? data.map((x: any) => (
-                  <div
-                    key={x._id}
-                    className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-                  >
-                    <div className="flex  flex-col items-center pb-10 px-4 pt-5">
-                      <h5 className="mb-1 text-xl text-center font-medium text-gray-900 dark:text-white">
-                        <Image
-                          src={x.mapIconsName}
-                          height={200}
-                          width={200}
-                          alt="mapicon"
-                        ></Image>
-                      </h5>
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
-                        <small>Operator:</small>
-                        <br /> <strong>{x.operator.operatorsName}</strong>
-                      </span>
-                      <div className="flex mt-4 md:mt-6">
-                        <EditButton tableName={DataBaseTable} id={x._id} />
-                        <DeleteButton tableName={DataBaseTable} id={x._id} />
-                      </div>
-                    </div>
-                  </div>
-                ))
+              ? data.map((x: any) => {
+                  {
+                    return subData
+                      ? subData.map((c: any) => {
+                          if (x.operator === c._id) {
+                            return (
+                              <>
+                                <div
+                                  key={x._id}
+                                  className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+                                >
+                                  <div className="flex  flex-col items-center pb-10 px-4 pt-5">
+                                    <h5 className="mb-1 text-xl text-center font-medium text-gray-900 dark:text-white">
+                                      <Image
+                                        src={x.mapIconsName}
+                                        height={200}
+                                        width={200}
+                                        alt="mapicon"
+                                      ></Image>
+                                    </h5>
+                                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                                      <small>Operator:</small>
+                                      <br /> <strong>{c.operatorsName}</strong>
+                                    </span>
+                                    <div className="flex mt-4 md:mt-6">
+                                      <EditButton
+                                        tableName={DataBaseTable}
+                                        id={x._id}
+                                      />
+                                      <DeleteButton
+                                        tableName={DataBaseTable}
+                                        id={x._id}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </>
+                            );
+                          }
+                        })
+                      : null;
+                  }
+                })
               : null}
           </div>
         </div>

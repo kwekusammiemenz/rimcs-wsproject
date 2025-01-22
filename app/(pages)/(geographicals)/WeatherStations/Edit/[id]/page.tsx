@@ -1,6 +1,6 @@
 import LocationTypes from "@/app/api/models/locationtypes";
 import EditWeatherStations from "@/src/components/WeatherStations/Edit";
-import { GETDATABYiDs } from "@/src/lib/apiActions";
+import { GETDATABYiDs } from "@/src/Actions/ApiCalls/apiActions";
 
 const DataBaseTable = "WeatherStations";
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { GETAll, getAPIDATA } from "@/src/lib/apiActions";
+import { GETAll, getAPIDATA } from "@/src/Actions/ApiCalls/apiActions";
 
 const DataBaseTable = "Districts";
 const DropdownDataBaseTable = "Regions";
@@ -17,12 +17,12 @@ export default function CreateDistricts() {
 
   const router = useRouter();
 
-    useEffect(() => {
-      const getDropdowns = async () => {
-        setRegionsList(await GETAll(DropdownDataBaseTable));
-      };
-      getDropdowns();
-    }, []);
+  useEffect(() => {
+    const getDropdowns = async () => {
+      setRegionsList(await GETAll(DropdownDataBaseTable));
+    };
+    getDropdowns();
+  }, []);
 
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
@@ -112,12 +112,12 @@ export default function CreateDistricts() {
               <option></option>
               {regionsList
                 ? regionsList.map((x: any) => {
-                    return (
-                      <option key={x._id} value={x._id}>
-                        {x.regionsName}
-                      </option>
-                    );
-                  })
+                  return (
+                    <option key={x._id} value={x._id}>
+                      {x.regionsName}
+                    </option>
+                  );
+                })
                 : null}
             </select>
           </div>

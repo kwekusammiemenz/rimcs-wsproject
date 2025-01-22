@@ -56,7 +56,7 @@ export const GETDATABYiDs = async (tabeiD: string, tableName: string) => {
 
 export const DELETEData = async (tabeiD: string, tableName: string) => {
   const Query = `${getAPIDATA(tableName)}/${tabeiD}`;
-  console.log(Query);
+  //console.log(Query);
   const res = await fetch(Query, {
     method: "DELETE",
   });
