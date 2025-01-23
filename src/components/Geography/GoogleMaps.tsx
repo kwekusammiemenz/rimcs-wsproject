@@ -1,31 +1,29 @@
-/*Since the map was loaded on client side, 
-we need to make this component client rendered as well*/
+
 "use client";
 
 import { GETAll } from "@/src/Actions/ApiCalls/apiActions";
-//Map component Component from library
-import { GoogleMap, InfoWindow, InfoWindowF, Marker, MarkerF } from "@react-google-maps/api";
-import React, { useEffect, useState } from "react";
+import {
+  GoogleMap,
+  InfoWindowF,
+  MarkerF,
+} from "@react-google-maps/api";
+import React, { SetStateAction, useEffect, useState } from "react";
 
 const DataBaseTable = "WeatherStations";
 const MapIconsTable = "MapIcons";
 
-
-//Map's styling
 const defaultMapContainerStyle = {
   width: "100%",
   height: "100vh",
   //borderRadius: "15px 0px 0px 15px",
 };
 
-//K2's coordinates
+// Ghana's coordinates
 const defaultMapCenter = {
   lat: 7.946527,
   lng: -1.023194,
 };
 
-//Default zoom level, can be adjusted
-const defaultMapZoom = 18;
 
 //Map options
 const defaultMapOptions = {
@@ -36,11 +34,10 @@ const defaultMapOptions = {
 };
 
 const MapComponent = () => {
-
   const [weatherStations, setWeatherStations] = useState([]);
   const [mapIcons, setMapIcons] = useState([]);
 
-  const [selectedPlace, setSelectedPlace] = useState([]);
+  const [selectedPlace, setSelectedPlace] = useState<any[]>([]);
 
   useEffect(() => {
     const getCordinates = async () => {
@@ -50,138 +47,151 @@ const MapComponent = () => {
     getCordinates();
   }, []);
 
-  let featureLayer;
-  let infoWindow;
-  let lastInteractedFeatureIds = [];
-  let lastClickedFeatureIds = [];
-
-  // async function createInfoWindow(event: any) {
-  //   let feature = event.features[0];
-  //   if (!feature.placeId) return;
-
-  //   // Update the infowindow.
-  //   const place = await feature.fetchPlace();
-  //   let content =
-  //       '<span style="font-size:small">Display name: ' + place.displayName +
-  //       '<br/> Place ID: ' + feature.placeId +
-  //       '<br/> Feature type: ' + feature.featureType + '</span>';
-
-  //   updateInfoWindow(content, event.latLng);
-  // }
-
-  // // Helper function to create an info window.
-  // function updateInfoWindow(content: string, center: any) {
-  //   infoWindow.setContent(content);
-  //   infoWindow.setPosition(center);
-  //   infoWindow.open({
-  //     Map,
-  //     shouldFocus: false,
-  //   });
-  // }
-
-  function handleClick(e: any) {
-    console.log(e.location);
+  function handleClick(selectedData: any) {
+    setSelectedPlace([selectedData]);
   }
 
   return (
     <div className="w-full">
-      {/* <GoogleMap
-                mapContainerStyle={defaultMapContainerStyle}
-                center={defaultMapCenter}
-                zoom={defaultMapZoom}
-                options={defaultMapOptions}
-            >
-              <Marker position={{ lat: Number("35.8799866"), lng: Number("76.5048004") }} />
-              <InfoWindow />
-            </GoogleMap> */}
-
       <GoogleMap
         mapContainerStyle={defaultMapContainerStyle}
         center={defaultMapCenter}
-        zoom={8}
-      //options={defaultMapOptions}
+        zoom={7}
+        //options={defaultMapOptions}
       >
         {weatherStations
-          ? weatherStations.map((x: any, index) => {
-            return (
-              <MarkerF
-                key={index}
-                title={x.weatherStationsName}
-                position={{
-                  lat: Number(x.latitude),
-                  lng: Number(x.longitude),
-                }}
-                onClick={(e) => {
-                  // x === selectedPlace ? setSelectedPlace(null):setSelectedPlace(x);
-                  console.log(e)
-                }}
-
-              // key={index}
-              // title={x.weatherStationsName}
-              // position={{
-              //   lat: Number(x.latitude),
-              //   lng: Number(x.longitude),
-              // }}
-              // onClick={() => handleClick(x)}
-
-              // onClick={(props: any, marker: React.SetStateAction<null>) => {
-              //   setSelectedElement(x);
-              //   setActiveMarker(marker);
-              // }}
-              />
-            );
-          })
+          ? weatherStations.map((x: any) => {
+              return mapIcons
+                ? mapIcons.map((c: any) => {
+                    if (x.operator === c.operator) {
+                      {
+                        return (
+                          <MarkerF
+                            key={x._id}
+                            title={x.weatherStationsName}
+                            position={{
+                              lat: Number(x.latitude),
+                              lng: Number(x.longitude),
+                            }}
+                            onClick={() => {
+                              handleClick(x);
+                            }}
+                            icon={c.mapIconsName}
+                          />
+                        );
+                      }
+                    }
+                  })
+                : null;
+            })
           : null}
-        {/*   {selectedPlace &&(
-          <InfoWindowF
-          position={{
-                    lat: selectedPlace.latitude,
-                    lng: selectedPlace.longitude,
+
+        {selectedPlace
+          ? selectedPlace.map((x: any) => {
+              return (
+                <InfoWindowF
+                  key={x._id}
+                  position={{
+                    lat: Number(x.latitude),
+                    lng: Number(x.longitude),
                   }}
                   zIndex={1}
-                  options={{pixelOffset:{
-                    width: 0, height: -40,
-                    equals: function (other: google.maps.Size | null): boolean {
-                      throw new Error("Function not implemented.");
-                    }
-                  }}}
-                  onCloseClick={()=>setSelectedPlace(undefined)}
+                  options={{
+                    pixelOffset: {
+                      width: 0,
+                      height: -40,
+                      equals: function (
+                        other: google.maps.Size | null
+                      ): boolean {
+                        throw new Error("Function not implemented.");
+                      },
+                    },
+                  }}
+                  onCloseClick={() => setSelectedPlace([])}
+                >
+                  <div
+                    key={x._id}
+                    className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700"
                   >
-                    <div>
-                      <h3>{selectedPlace.weatherStationsName}</h3>
+                    <div className="flex items-center justify-between mb-4">
+                      <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                        {x.weatherStationsName}
+                      </h5>
                     </div>
-                  </InfoWindowF>
-        )}
-         */}
-
-
-
-
-
-        {/* {selectedElement
-          ? selectedElement.map((x: any) => {
-              return (
-                <>
-                  <InfoWindow
-                    //visible={showInfoWindow}
-                    //marker={activeMarker}
-                    onCloseClick={() => {
-                      setSelectedElement([]);
-                    }}
-                  >
-                    <div>
-                      <h1>{x.weatherStationsName}</h1>
+                    <div className="flow-root">
+                      <ul
+                        role="list"
+                        className="divide-y divide-gray-200 dark:divide-gray-700"
+                      >
+                        <li className="py-3 sm:py-4">
+                          <div className="flex items-center">
+                            <div className="flex-1 min-w-0 ms-4">
+                              <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                                location
+                              </p>
+                              <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                {x.location}
+                              </p>
+                            </div>
+                          </div>
+                        </li>
+                        <li className="py-3 sm:py-4">
+                          <div className="flex items-center ">
+                            <div className="flex-1 min-w-0 ms-4">
+                              <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                                accuracyLevel
+                              </p>
+                              <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                {x.accuracyLevel}
+                              </p>
+                            </div>
+                          </div>
+                        </li>
+                        <li className="py-3 sm:py-4">
+                          <div className="flex items-center">
+                            <div className="flex-1 min-w-0 ms-4">
+                              <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                                elevation
+                              </p>
+                              <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                {x.elevation}
+                              </p>
+                            </div>
+                          </div>
+                        </li>
+                        <li className="py-3 sm:py-4">
+                          <div className="flex items-center ">
+                            <div className="flex-1 min-w-0 ms-4">
+                              <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                                Cordinate
+                              </p>
+                              <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                ({x.latitude}
+                                {", "}
+                                {x.longitude})
+                              </p>
+                            </div>
+                          </div>
+                        </li>
+                        <li className="pt-3 pb-0 sm:pt-4">
+                          <div className="flex items-center ">
+                            <div className="flex-1 min-w-0 ms-4">
+                              <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                                stationStatus
+                              </p>
+                              <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                {x.stationStatus}
+                              </p>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
                     </div>
-                  </InfoWindow>
-                </>
+                  </div>
+                </InfoWindowF>
               );
             })
-          : null} */}
-
-
-
-
-
+          : null}
       </GoogleMap>
     </div>
   );
