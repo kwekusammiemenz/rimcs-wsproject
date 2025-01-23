@@ -34,7 +34,7 @@ export default function RootLayout({
                 <Link href="/Setup-WsStations">Ws-Stations</Link>
               </li>
               <li>
-                <Link href="/Geography">Geography</Link>
+                <Link href="/Map">Map</Link>
               </li>
             </ul>
           </nav>
