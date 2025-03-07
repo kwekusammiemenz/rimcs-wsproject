@@ -2,61 +2,46 @@
 
 import * as XLSX from "xlsx";
 import { GETAll } from "@/src/Actions/ApiCalls/apiActions";
-import { createBulkDistricts } from "@/src/Actions/ApiSaves/apiSaveDistricts";
-import { DistrictsProps } from "@/src/Types/DataTypesProps";
+import { createBulkWeatherStations } from "@/src/Actions/ApiSaves/apiSaveWeatherStations";
+import { WeatherStationsProps } from "@/src/Types/DataTypesProps";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const DataBaseTable: string = "Districts";
-const subDataBaseTable: string = "Regions";
+const DataBaseTable: string = "WeatherStations";
+const countriesDataBaseTable: string = "Countries";
+const regionsDataBaseTable: string = "Regions";
+const districtsDataBaseTable: string = "Districts";
+const locationTypesDataBaseTable: string = "LocationTypes";
+const operatorsDataBaseTable: string = "Operators";
+//const sponsorsDataBaseTable: string = "Sponsors";
+const stationsNaturesDataBaseTable: string = "StationsNatures";
 
-export default function ImportDistricts() {
+export default function ImportWeatherStations() {
   const router = useRouter();
-  const [dataList, setDataList] = useState([]);
-  const [subDataList, setSubDataList] = useState([]);
+  //const [dataList, setDataList] = useState([]);
+  const [countriesDataList, setCountriesDataList] = useState([]);
+  const [regionsDataList, setRegionsDataList] = useState([]);
+  const [districtsDataList, setDistrictsDataList] = useState([]);
+  const [locationTypesDataList, setLocationTypesDataList] = useState([]);
+  const [operatorsDataList, setOperatorsDataList] = useState([]);
+  const [stationsNaturesDataList, setStationsNaturesDataList] = useState([]);
 
-  useEffect(() => {
-    const getData = async () => {
-      setDataList(await GETAll(DataBaseTable));
-      setSubDataList(await GETAll(subDataBaseTable));
-    };
-    getData();
-  }, []);
-
-  // file
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [jsonData, setJsonData] = useState("");
 
-  //console.log(file);
-
-  // function saveData() {
-  //   if (file) {
-  //     setLoading(true);
-  //     const reader = new FileReader();
-  //     reader.onload = async (e) => {
-  //       const data = e.target?.result;
-  //       if (data) {
-  //         const workbook = XLSX.read(data, { type: "binary" });
-  //         // SheetName
-  //         const sheetName = workbook.SheetNames[0];
-  //         // Worksheet
-  //         const workSheet = workbook.Sheets[sheetName];
-  //         // Json
-  //         const json: DistrictsProps[] = XLSX.utils.sheet_to_json(workSheet);
-  //         //Save to the DB
-  //         try {
-  //           // console.log(json);
-  //           await createBulkDistricts(json);
-  //           setLoading(false);
-  //         } catch (error) {
-  //           console.log(error);
-  //         }
-  //       }
-  //     };
-  //     reader.readAsBinaryString(file);
-  //   }
-  // }
+  useEffect(() => {
+    const getData = async () => {
+      setCountriesDataList(await GETAll(countriesDataBaseTable));
+      setCountriesDataList(await GETAll(countriesDataBaseTable));
+      setRegionsDataList(await GETAll(regionsDataBaseTable));
+      setDistrictsDataList(await GETAll(districtsDataBaseTable));
+      setLocationTypesDataList(await GETAll(locationTypesDataBaseTable));
+      setOperatorsDataList(await GETAll(operatorsDataBaseTable));
+      setStationsNaturesDataList(await GETAll(stationsNaturesDataBaseTable));
+    };
+    getData();
+  }, []);
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -69,7 +54,6 @@ export default function ImportDistricts() {
 
         reader.onload = async (e) => {
           const data = e.target?.result;
-
           if (data) {
             const workbook = XLSX.read(data, { type: "binary" });
             // SheetName
@@ -77,24 +61,34 @@ export default function ImportDistricts() {
             // Worksheet
             const workSheet = workbook.Sheets[sheetName];
             // Json
-            const json: DistrictsProps[] = XLSX.utils.sheet_to_json(workSheet);
-            const recQuery = subDataList;
-
-            //Save to the DB
-            try {
-              const res = await createBulkDistricts(
-                json,
-                recQuery,
-                DataBaseTable
-              );
-              if (res == true) {
-                setLoading(false);
-                router.refresh();
-                router.push(`/${DataBaseTable}`);
-              }
-            } catch (error) {
-              console.log(error);
+            const json: WeatherStationsProps[] =
+              XLSX.utils.sheet_to_json(workSheet);
+            const res = await createBulkWeatherStations(
+              json,
+              countriesDataList,
+              regionsDataList,
+              districtsDataList,
+              locationTypesDataList,
+              operatorsDataList,
+              stationsNaturesDataList,
+              DataBaseTable
+            );
+            if (res == true) {
+              setLoading(false);
+              router.refresh();
+              router.push(`/${DataBaseTable}`);
             }
+
+            // try {
+            //   const res = await createBulkWeatherStations(json, countriesQuery);
+            //   if (res == true) {
+            //     setLoading(false);
+            //     router.refresh();
+            //     router.push(`/${DataBaseTable}`);
+            //   }
+            // } catch (error) {
+            //   console.log(error);
+            // }
           }
         };
         reader.readAsBinaryString(file);
@@ -117,49 +111,14 @@ export default function ImportDistricts() {
           // Worksheet
           const workSheet = workbook.Sheets[sheetName];
           // Json
-          const json = XLSX.utils.sheet_to_json(workSheet);
+          const json: WeatherStationsProps[] =
+            XLSX.utils.sheet_to_json(workSheet);
           setJsonData(JSON.stringify(json, null, 2));
         }
       };
       reader.readAsBinaryString(file);
     }
   }
-
-  //   function saveData() {
-  //     if (file) {
-  //       setLoading(true);
-  //       const reader = new FileReader();
-  //       reader.onload = async (e) => {
-  //         const data = e.target?.result;
-  //         if (data) {
-  //           const workbook = XLSX.read(data, { type: "binary" });
-  //           // SheetName
-  //           const sheetName = workbook.SheetNames[0];
-  //           // Worksheet
-  //           const workSheet = workbook.Sheets[sheetName];
-  //           // Json
-  //           const json: RegionsProps[] = XLSX.utils.sheet_to_json(workSheet);
-  //           //Save to the DB
-  //           try {
-  //             // console.log(json);
-  //             await createBulkUsers(json);
-  //             setLoading(false);
-  //           } catch (error) {
-  //             console.log(error);
-  //           }
-  //         }
-  //       };
-  //       reader.readAsBinaryString(file);
-  //     }
-  //   }
-
-  //   async function clearData() {
-  //     try {
-  //       await deleteUsers();
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
 
   return (
     <div className="py-8 space-y-8">
@@ -191,13 +150,6 @@ export default function ImportDistricts() {
         >
           Save Data
         </button>
-
-        {/* <button
-          onClick={clearData}
-          className="py-2 px-6 rounded bg-red-600 text-slate-100 "
-        >
-          Clear Data
-        </button> */}
       </div>
 
       <pre>{jsonData}</pre>

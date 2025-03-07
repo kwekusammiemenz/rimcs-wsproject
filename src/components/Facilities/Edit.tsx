@@ -10,7 +10,7 @@ const CountriesDropdownDataBaseTable = "Countries";
 const RegionsDropdownDataBaseTable = "Regions";
 const DistrictsDropdownDataBaseTable = "Districts";
 const OperatorsDropdownDataBaseTable = "Operators";
-//const SponsorsDropdownDataBaseTable = "Sponsors";
+const StationsNaturesDropdownDataBaseTable = "StationsNatures";
 
 export default function EditWeatherStations({
   id,
@@ -30,6 +30,7 @@ export default function EditWeatherStations({
   latitude,
   longitude,
   elevation,
+  stationsNatures,
 }: any) {
   const [newWeatherStationsName, setNewWeatherStationsName] =
     useState(weatherStationsName);
@@ -51,13 +52,14 @@ export default function EditWeatherStations({
   const [newLatitude, setNewLatitude] = useState(latitude);
   const [newLongitude, setNewLongitude] = useState(longitude);
   const [newElevation, setNewElevation] = useState(elevation);
+  const [newStationsNatures, setNewStationsNatures] = useState(stationsNatures);
 
   const [locationTypesList, setLocationTypesList] = useState([]);
   const [countriesList, setCountriesList] = useState([]);
   const [regionsList, setRegionsList] = useState([]);
   const [districtsList, setDistrictsList] = useState([]);
   const [operatorsList, setOperatorsList] = useState([]);
-  //const [sponsorsList, setSponsorsList] = useState([]);
+  const [stationsNaturesList, setStationsNaturesList] = useState([]);
 
   const router = useRouter();
 
@@ -68,7 +70,9 @@ export default function EditWeatherStations({
       setRegionsList(await GETAll(RegionsDropdownDataBaseTable));
       setDistrictsList(await GETAll(DistrictsDropdownDataBaseTable));
       setOperatorsList(await GETAll(OperatorsDropdownDataBaseTable));
-      //setSponsorsList(await GETAll(SponsorsDropdownDataBaseTable));
+      setStationsNaturesList(
+        await GETAll(StationsNaturesDropdownDataBaseTable)
+      );
     };
     getDropDowns();
   }, []);
@@ -104,6 +108,7 @@ export default function EditWeatherStations({
           newLatitude,
           newLongitude,
           newElevation,
+          newStationsNatures,
           id,
         }),
       });
@@ -152,10 +157,10 @@ export default function EditWeatherStations({
               <option></option>
               {locationTypesList
                 ? locationTypesList.map((x: any) => (
-                  <option key={x._id} value={x._id}>
-                    {x.locationTypesName}
-                  </option>
-                ))
+                    <option key={x._id} value={x._id}>
+                      {x.locationTypesName}
+                    </option>
+                  ))
                 : null}
             </select>
           </div>
@@ -185,10 +190,10 @@ export default function EditWeatherStations({
               <option></option>
               {countriesList
                 ? countriesList.map((x: any) => (
-                  <option key={x._id} value={x._id}>
-                    {x.countriesName}
-                  </option>
-                ))
+                    <option key={x._id} value={x._id}>
+                      {x.countriesName}
+                    </option>
+                  ))
                 : null}
             </select>
           </div>
@@ -205,10 +210,10 @@ export default function EditWeatherStations({
               <option></option>
               {regionsList
                 ? regionsList.map((x: any) => (
-                  <option key={x._id} value={x._id}>
-                    {x.regionsName}
-                  </option>
-                ))
+                    <option key={x._id} value={x._id}>
+                      {x.regionsName}
+                    </option>
+                  ))
                 : null}
             </select>
           </div>
@@ -225,10 +230,10 @@ export default function EditWeatherStations({
               <option></option>
               {districtsList
                 ? districtsList.map((x: any) => (
-                  <option key={x._id} value={x._id}>
-                    {x.districtsName}
-                  </option>
-                ))
+                    <option key={x._id} value={x._id}>
+                      {x.districtsName}
+                    </option>
+                  ))
                 : null}
             </select>
           </div>
@@ -258,10 +263,10 @@ export default function EditWeatherStations({
               <option></option>
               {operatorsList
                 ? operatorsList.map((x: any) => (
-                  <option key={x._id} value={x._id}>
-                    {x.operatorsName}
-                  </option>
-                ))
+                    <option key={x._id} value={x._id}>
+                      {x.operatorsName}
+                    </option>
+                  ))
                 : null}
             </select>
           </div>
@@ -370,6 +375,26 @@ export default function EditWeatherStations({
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               required
             />
+          </div>
+          <div>
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              stationsNatures
+            </label>
+            <select
+              onChange={(e) => setNewStationsNatures(e.target.value)}
+              value={newStationsNatures}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+              required
+            >
+              <option></option>
+              {stationsNaturesList
+                ? stationsNaturesList.map((x: any) => (
+                    <option key={x._id} value={x._id}>
+                      {x.stationsNaturesName}
+                    </option>
+                  ))
+                : null}
+            </select>
           </div>
           <button
             type="submit"

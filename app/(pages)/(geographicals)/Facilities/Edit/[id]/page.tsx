@@ -1,5 +1,5 @@
 import LocationTypes from "@/app/api/models/locationtypes";
-import EditWeatherStations from "@/src/components/WeatherStations/Edit";
+import EditWeatherStations from "@/src/components/Facilities/Edit";
 import { GETDATABYiDs } from "@/src/Actions/ApiCalls/apiActions";
 
 const DataBaseTable = "WeatherStations";
@@ -29,6 +29,7 @@ export default async function Edit({
     latitude,
     longitude,
     elevation,
+    stationsNature,
   } = WeatherStations;
 
   return (
@@ -50,6 +51,7 @@ export default async function Edit({
       latitude={latitude}
       longitude={longitude}
       elevation={elevation}
+      stationsNature={stationsNature}
     />
   );
 }

@@ -31,7 +31,7 @@ export default function RootLayout({
                 <Link href="/Setup-Components">Components</Link>
               </li>
               <li>
-                <Link href="/Setup-WsStations">Ws-Stations</Link>
+                <Link href="/Setup-Facilities">Facilities</Link>
               </li>
               <li>
                 <Link href="/Map">Map</Link>

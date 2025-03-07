@@ -3,7 +3,7 @@
 import * as XLSX from "xlsx";
 import { GETAll } from "@/src/Actions/ApiCalls/apiActions";
 import { createBulkRegions } from "@/src/Actions/ApiSaves/apiSaveRegions";
-import { RegionsProps } from "@/src/Types/CordinatesProps";
+import { RegionsProps } from "@/src/Types/DataTypesProps";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -50,10 +50,16 @@ export default function ImportRegions() {
             const recQuery = subDataList;
 
             try {
-              await createBulkRegions(json, recQuery);
-              setLoading(false);
-              router.refresh();
-              router.push(`/${DataBaseTable}`);
+              const res = await createBulkRegions(
+                json,
+                recQuery,
+                DataBaseTable
+              );
+              if (res == true) {
+                setLoading(false);
+                router.refresh();
+                router.push(`/${DataBaseTable}`);
+              }
             } catch (error) {
               console.log(error);
             }

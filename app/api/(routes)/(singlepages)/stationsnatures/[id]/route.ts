@@ -1,7 +1,6 @@
-import WeatherStations from "@/app/api/models/weatherstations";
+import StationsNatures from "@/app/api/models/stationsnatures";
 import { dbConnect } from "@/app/api/mongo/mongodb";
 import { NextResponse } from "next/server";
-
 export const GET = async (
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -10,19 +9,13 @@ export const GET = async (
 
   await dbConnect();
 
-  return await WeatherStations.findOne({ _id: id })
-    // .populate("locationType")
-    // .populate("country")
-    // .populate("region")
-    // .populate("district")
-    // .populate("operator")
-    // .select("-__v")
+  return await StationsNatures.findOne({ _id: id })
     .then((recQuery) =>
       recQuery
         ? new NextResponse(
             JSON.stringify({
               message: "Record Found",
-              WeatherStations: recQuery,
+              StationsNatures: recQuery,
             }),
             {
               status: 200,
@@ -32,7 +25,7 @@ export const GET = async (
             status: 404,
           })
     )
-    .catch((error) => NextResponse.json({ error }, { status: 500 }));
+    .catch((error: any) => NextResponse.json({ error }, { status: 500 }));
 };
 
 export const PUT = async (
@@ -41,49 +34,13 @@ export const PUT = async (
 ) => {
   const id = (await params).id;
   const body = await request.json();
-  const {
-    newWeatherStationsName: weatherStationsName,
-    newLocationType: locationType,
-    newLocation: location,
-    newCountry: country,
-    newRegion: region,
-    newDistrict: district,
-    newDateOfInstallation: dateOfInstallation,
-    newOperator: operator,
-    newDataFrequency: dataFrequency,
-    newStationStatus: stationStatus,
-    newObservedParameters: observedParameters,
-    newAccuracyLevel: accuracyLevel,
-    newCommunicationSystem: communicationSystem,
-    newLatitude: latitude,
-    newLongitude: longitude,
-    newElevation: elevation,
-    newStationsNature: stationsNature,
-  } = body;
+  const { newStationsNaturesName: stationsNaturesName } = body;
 
   await dbConnect();
 
-  return WeatherStations.findByIdAndUpdate(
+  return StationsNatures.findByIdAndUpdate(
     id,
-    {
-      weatherStationsName,
-      locationType,
-      location,
-      country,
-      region,
-      district,
-      dateOfInstallation,
-      operator,
-      dataFrequency,
-      stationStatus,
-      observedParameters,
-      accuracyLevel,
-      communicationSystem,
-      latitude,
-      longitude,
-      elevation,
-      stationsNature,
-    },
+    { stationsNaturesName },
     { new: true }
   )
     .then((recQuery) => {
@@ -92,11 +49,11 @@ export const PUT = async (
         return recQuery
           .save()
           .then(
-            (WeatherStations: any) =>
+            (StationsNatures: any) =>
               new NextResponse(
                 JSON.stringify({
                   message: "Record updated",
-                  WeatherStations: WeatherStations,
+                  StationsNatures: StationsNatures,
                 }),
                 { status: 201 }
               )
@@ -129,10 +86,10 @@ export const DELETE = async (
 
   await dbConnect();
 
-  return await WeatherStations.findByIdAndDelete(id)
-    .then((WeatherStations) =>
-      WeatherStations
-        ? new NextResponse(JSON.stringify({ message: "Record Deleted" }), {
+  return await StationsNatures.findByIdAndDelete(id)
+    .then((StationsNatures) =>
+      StationsNatures
+        ? new NextResponse(JSON.stringify({ message: "RecordDeleted" }), {
             status: 200,
           })
         : new NextResponse(JSON.stringify({ message: "Record Not found" }), {

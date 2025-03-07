@@ -47,6 +47,7 @@ export const POST = async (request: Request) => {
     latitude,
     longitude,
     elevation,
+    stationsNature,
   } = await request.json();
 
   await dbConnect();
@@ -74,6 +75,7 @@ export const POST = async (request: Request) => {
       latitude,
       longitude,
       elevation,
+      stationsNature
     });
 
     return recQuery

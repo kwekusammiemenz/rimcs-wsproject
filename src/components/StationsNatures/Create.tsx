@@ -4,10 +4,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getAPIDATA } from "@/src/Actions/ApiCalls/apiActions";
 
-const DataBaseTable = "LocationTypes";
+const DataBaseTable = "StationsNatures";
 
-export default function CreateLocationTypes() {
-  const [locationTypesName, setLocationTypesName] = useState("");
+export default function CreateStationsNatures() {
+  const [stationsNaturesName, setStationsNaturesName] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
@@ -20,7 +20,7 @@ export default function CreateLocationTypes() {
           "Content-type": "application/json",
         },
         body: JSON.stringify({
-          locationTypesName,
+          stationsNaturesName,
         }),
       });
 
@@ -44,13 +44,13 @@ export default function CreateLocationTypes() {
           </h5>
           <div>
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              LocationTypesName
+              StationsNaturesName
             </label>
             <input
-              onChange={(e) => setLocationTypesName(e.target.value)}
-              value={locationTypesName}
+              onChange={(e) => setStationsNaturesName(e.target.value)}
+              value={stationsNaturesName}
               type="text"
-              placeholder="LocationTypesName"
+              placeholder="StationsNaturesName"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               required
             />

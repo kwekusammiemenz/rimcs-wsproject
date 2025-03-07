@@ -6,8 +6,8 @@ import { getAPIUPDATEPATH } from "@/src/Actions/ApiCalls/apiActions";
 
 const DataBaseTable = "Sponsors";
 
-export default function EditSponsors({ id, sponsorsName }: any) {
-  const [newSponsorsName, setNewSponsorsName] = useState(sponsorsName);
+export default function EditSponsors({ id, SponsorsName }: any) {
+  const [newSponsorsName, setNewSponsorsName] = useState(SponsorsName);
 
   const router = useRouter();
 

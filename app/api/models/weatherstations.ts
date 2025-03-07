@@ -17,6 +17,7 @@ export interface IWeatherStations extends Document {
   latitude: string;
   longitude: string;
   elevation: number;
+  stationsNature: string;
 }
 
 // export interface IWeatherStationsModel extends IWeatherStations, Document {
@@ -41,9 +42,9 @@ const weatherStationsSchema: Schema = new Schema(
     country: { type: Schema.Types.ObjectId, ref: "Countries", required: true },
     region: { type: Schema.Types.ObjectId, ref: "Regions", required: true },
     district: { type: Schema.Types.ObjectId, ref: "Districts", required: true },
-    dateOfInstallation: { type: Date, required: true },
+    dateOfInstallation: { type: Number, required: true },
     operator: { type: Schema.Types.ObjectId, ref: "Operators", required: true },
-    dataFrequency: { type: Date, required: true },
+    dataFrequency: { type: Number, required: true },
     stationStatus: { type: String, required: true },
     observedParameters: { type: String, required: true },
     accuracyLevel: { type: Number, required: true },
@@ -51,6 +52,11 @@ const weatherStationsSchema: Schema = new Schema(
     latitude: { type: String, required: true, unique: true },
     longitude: { type: String, required: true, unique: true },
     elevation: { type: Number, required: true },
+    stationsNature: {
+      type: Schema.Types.ObjectId,
+      ref: "StationsNatures",
+      required: true,
+    },
   },
   { timestamps: true }
 );

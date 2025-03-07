@@ -1,31 +1,38 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { getAPIDATA } from "@/src/Actions/ApiCalls/apiActions";
+import { useRouter, usePathname } from "next/navigation";
+import { getAPIUPDATEPATH } from "@/src/Actions/ApiCalls/apiActions";
 
-const DataBaseTable = "LocationTypes";
+const DataBaseTable = "StationsNatures";
 
-export default function CreateLocationTypes() {
-  const [locationTypesName, setLocationTypesName] = useState("");
+export default function EditStationsNatures({ id, stationsNaturesName }: any) {
+  const [newStationsNaturesName, setNewStationsNaturesName] =
+    useState(stationsNaturesName);
+
   const router = useRouter();
+
+  const apiURI: string = getAPIUPDATEPATH(
+    usePathname().toLowerCase().replace("edit/", "")
+  );
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     try {
-      const res = await fetch(getAPIDATA(DataBaseTable), {
-        method: "POST",
+      const res = await fetch(apiURI, {
+        method: "PUT",
         headers: {
           "Content-type": "application/json",
         },
         body: JSON.stringify({
-          locationTypesName,
+          newStationsNaturesName,
+          id,
         }),
       });
 
       if (!res.ok) {
-        throw new Error("Failed to update record");
+        throw new Error("Failed to update Record");
       }
 
       router.refresh();
@@ -44,13 +51,13 @@ export default function CreateLocationTypes() {
           </h5>
           <div>
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              LocationTypesName
+              StationsNaturesName
             </label>
             <input
-              onChange={(e) => setLocationTypesName(e.target.value)}
-              value={locationTypesName}
+              onChange={(e) => setNewStationsNaturesName(e.target.value)}
+              value={newStationsNaturesName}
               type="text"
-              placeholder="LocationTypesName"
+              placeholder="StationsNaturesName"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               required
             />

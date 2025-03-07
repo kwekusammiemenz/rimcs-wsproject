@@ -10,6 +10,7 @@ const CountriesDropdownDataBaseTable = "Countries";
 const RegionsDropdownDataBaseTable = "Regions";
 const DistrictsDropdownDataBaseTable = "Districts";
 const OperatorsDropdownDataBaseTable = "Operators";
+const StationsNaturesDropdownDataBaseTable = "StationsNatures";
 
 export default function CreateWeatherStations() {
   const [weatherStationsName, setWeatherStationsName] = useState("");
@@ -28,12 +29,14 @@ export default function CreateWeatherStations() {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [elevation, setElevation] = useState("");
+  const [stationsNatures, setStationsNatures] = useState("");
 
   const [locationTypesList, setLocationTypesList] = useState([]);
   const [countriesList, setCountriesList] = useState([]);
   const [regionsList, setRegionsList] = useState([]);
   const [districtsList, setDistrictsList] = useState([]);
   const [operatorsList, setOperatorsList] = useState([]);
+  const [stationsNaturesList, setStationsNaturesList] = useState([]);
 
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
@@ -47,6 +50,7 @@ export default function CreateWeatherStations() {
       setRegionsList(await GETAll(RegionsDropdownDataBaseTable));
       setDistrictsList(await GETAll(DistrictsDropdownDataBaseTable));
       setOperatorsList(await GETAll(OperatorsDropdownDataBaseTable));
+      setStationsNaturesList(await GETAll(StationsNaturesDropdownDataBaseTable));
     };
     getDropDowns();
   }, []);
@@ -359,6 +363,26 @@ export default function CreateWeatherStations() {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
               />
+            </div>
+            <div>
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                stationsNatures
+              </label>
+              <select
+                onChange={(e) => setStationsNatures(e.target.value)}
+                value={stationsNatures}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                required
+              >
+                <option></option>
+                {stationsNaturesList
+                  ? stationsNaturesList.map((x: any) => (
+                    <option key={x._id} value={x._id}>
+                      {x.stationsNaturesName}
+                    </option>
+                  ))
+                  : null}
+              </select>
             </div>
           </div>
 

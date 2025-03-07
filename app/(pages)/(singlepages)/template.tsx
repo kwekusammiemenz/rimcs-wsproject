@@ -38,6 +38,13 @@ const ComponentsLayout = ({ children }: { children: React.ReactNode }) => {
               >
                 <Link href="/LocationTypes">LocationTypes</Link>
               </motion.li>
+              <motion.li
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 }}
+              >
+                <Link href="/StationsNatures">StationsNatures</Link>
+              </motion.li>
             </ul>
           </nav>
         </div>

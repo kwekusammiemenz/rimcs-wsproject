@@ -29,7 +29,7 @@ const ComponentsLayout = ({ children }: { children: React.ReactNode }) => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.1 }}
               >
-                <Link href="/WeatherStations">WeatherStations</Link>
+                <Link href="/Facilities">Facilities</Link>
               </motion.li>
             </ul>
           </nav>

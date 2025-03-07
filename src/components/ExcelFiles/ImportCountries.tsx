@@ -1,25 +1,24 @@
 "use client";
 
+import * as XLSX from "xlsx";
 import { GETAll } from "@/src/Actions/ApiCalls/apiActions";
 import { createBulkCountries } from "@/src/Actions/ApiSaves/apiSaveCountries";
-import { CountriesProps } from "@/src/Types/CordinatesProps";
+import { CountriesProps } from "@/src/Types/DataTypesProps";
 import React, { useEffect, useState } from "react";
-import * as XLSX from "xlsx";
+import { useRouter } from "next/navigation";
 
-const DataBaseTable: string = "Districts";
-const subDataBaseTable: string = "Regions";
+const DataBaseTable: string = "Countries";
 
 export default function ImportCountries() {
-  const [dataList, setDataList] = useState([]);
-  const [subDataList, setSubDataList] = useState([]);
+  const router = useRouter();
+  //const [dataList, setDataList] = useState([]);
 
-  useEffect(() => {
-    const getData = async () => {
-      setDataList(await GETAll(DataBaseTable));
-      setSubDataList(await GETAll(subDataBaseTable));
-    };
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     setDataList(await GETAll(DataBaseTable));
+  //   };
+  //   getData();
+  // }, []);
 
   // file
   const [file, setFile] = useState<File | null>(null);
@@ -47,9 +46,13 @@ export default function ImportCountries() {
             const json: CountriesProps[] = XLSX.utils.sheet_to_json(workSheet);
             //Save to the DB
             try {
-              // console.log(json);
-              createBulkCountries(json);
-              setLoading(false);
+              console.log(json);
+              const res = await createBulkCountries(json, DataBaseTable);
+              if (res == true) {
+                setLoading(false);
+                router.refresh();
+                router.push(`/${DataBaseTable}`);
+              }
             } catch (error) {
               console.log(error);
             }
@@ -182,34 +185,34 @@ export default function ImportCountries() {
               </tr>
             </thead>
             <tbody>
-              {dataList
+              {/* {dataList
                 ? dataList.map((x: any, index) => {
-                    {
-                      return subDataList
-                        ? subDataList.map((c: any) => {
-                            if (x.country === c._id) {
-                              return (
-                                <tr
-                                  key={index}
-                                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                                >
-                                  <th
-                                    scope="row"
-                                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                  >
-                                    {x.districtsName}
-                                  </th>
-                                  <td className="px-6 py-4">{x.latitude}</td>
-                                  <td className="px-6 py-4">{x.longitude}</td>
-                                  <td className="px-6 py-4">{c.regionsName}</td>
-                                </tr>
-                              );
-                            }
-                          })
-                        : null;
-                    }
-                  })
-                : null}
+                  {
+                    return subDataList
+                      ? subDataList.map((c: any) => {
+                        if (x.country === c._id) {
+                          return (
+                            <tr
+                              key={index}
+                              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                            >
+                              <th
+                                scope="row"
+                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                              >
+                                {x.districtsName}
+                              </th>
+                              <td className="px-6 py-4">{x.latitude}</td>
+                              <td className="px-6 py-4">{x.longitude}</td>
+                              <td className="px-6 py-4">{c.regionsName}</td>
+                            </tr>
+                          );
+                        }
+                      })
+                      : null;
+                  }
+                })
+                : null} */}
             </tbody>
           </table>
         </div>
