@@ -1,5 +1,5 @@
-//const BASE_URL = "https://rimcs-wsproject.vercel.app";
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://rimcs-wsproject.vercel.app";
+//const BASE_URL = "http://localhost:3000";
 
 export const getAPIDATA = (tableName: string) => {
   return `${BASE_URL}/api/${tableName.toLowerCase()}`;
